@@ -1,86 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Results</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
-    <script src="https://unpkg.com/jquery"></script>
-    <script src="https://unpkg.com/popper"></script>
-    <script src="https://unpkg.com/bootstrap"></script>
-</head>
+{% block content %}
 
-<body>
-    <h1>{{results[0]['preferred_common_name']|title}}</h1><i>{{results[0]['name']}}</i>
-    <h3>Description</h3>
-    <p>{{results[0]['wikipedia_summary']|safe}}</p>
+<h1>{{results[0]['preferred_common_name']|title}}</h1><i>{{results[0]['name']}}</i>
+{% if session['user_id'] %}
+<form method="POST">
+    <a href="/{{session['user_id']}}/save/{{results[0]['id']}}" type="button" class="btn btn-info">Save
+        to Nature Journal</a>
+</form>
+{% else %}
+<a href="/login" type="button" class="btn btn-info"> Login to Save
+</a>
+{%endif%}
+<h3>Description</h3>
+<p>{{results[0]['wikipedia_summary']|safe}}</p>
 
-    <img src="{{results[0]['taxon_photos'][0]['photo']['large_url']}}" class="img-fluid" alt="">
-    <h3>Times observed:{{results[0]['observations_count']}}</h3>
-    <h3>Conservation Status:</h3>
-
-
-    {%if not(results[0]['conservation_status'])%}
-
-    <p>No conservation status available</p>
-
-    {%elif results[0]['conservation_status']['status'] == 'VU' %}
-    <p>Vulnerable</p>
-    {%elif results[0]['conservation_status']['status'] == 'LC'%}
-    <p>Least Concern</p>
-    {%elif results[0]['conservation_status']['status'] == 'NT' %}
-    <p>Near Threatened</p>
-    {%elif results[0]['conservation_status']['status'] == 'EN'%}
-    <p>Endangered</p>
-    {%elif results[0]['conservation_status']['status'] == 'CR' %}
-    <p class="color-danger">Critically Endanged</p>
-    {%endif%}
+<img src="{{results[0]['taxon_photos'][0]['photo']['large_url']}}" class="img-fluid" alt="">
+{%if results[0]['taxon_photos'][1] %}
+<img src="{{results[0]['taxon_photos'][1]['photo']['medium_url']}}" class="img-fluid" alt="">
+{%endif%}
+{%if results[0]['taxon_photos'][2] %}
+<img src="{{results[0]['taxon_photos'][2]['photo']['medium_url']}}" class="img-fluid" alt="">
+{%endif%}
+<h3>Times observed:{{results[0]['observations_count']}}</h3>
+<h3>Conservation Status:</h3>
 
 
+{%if not(results[0]['conservation_status'])%}
+
+<p>No conservation status available</p>
+
+{%elif results[0]['conservation_status']['status'] == 'VU' %}
+<p class="color-warning">Vulnerable</p>
+{%elif results[0]['conservation_status']['status'] == 'LC'%}
+<p>Least Concern</p>
+{%elif results[0]['conservation_status']['status'] == 'NT' %}
+<p>Near Threatened</p>
+{%elif results[0]['conservation_status']['status'] == 'EN'%}
+<p>Endangered</p>
+{%elif results[0]['conservation_status']['status'] == 'CR' %}
+<p class="color-danger">Critically Endanged</p>
+{%endif%}
 
 
-    <h3>Classfications</h3>
 
-    {%for item in classify_info['results'] %}
 
-    <div class="card" style="width: 10rem;">
-        <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width: 10rem;">
-        <div class="card-body">
-            <h6 class="card-text">{{item[0]['name']}}</h6>
-            <!-- <p>{{item[0]['wikipedia_summary']|safe}}</p> -->
-        </div>
-        <a href="{{item[0]['id']}}" class="stretched-link">
-        </a>
+<h3>Classfications</h3>
+
+{%for item in classify_info['results'] %}
+
+<div class="card" style="width: 10rem;">
+    <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width: 10rem;">
+    <div class="card-body">
+        <h6 class="card-text">{{item[0]['name']}}</h6>
+        <!-- <p>{{item[0]['wikipedia_summary']|safe}}</p> -->
     </div>
+    <a href="{{item[0]['id']}}" class="stretched-link">
+    </a>
+</div>
 
 
-    {%endfor%}
+{%endfor%}
 
 
-    <h3>Related Species</h3>
-    {%if not(results[0]['children']) %}
-    <p>No related species found</p>
-    {%else%}
-    {%for item in results[0]['children'] %}
+<h3>Related Species</h3>
+{%if not(results[0]['children']) %}
+<p>No related species found</p>
+{%else%}
+{%for item in results[0]['children'] %}
 
-    <div class="card" style="width: 10rem;">
-        <img class="card-img-top" src="{{item['default_photo']['medium_url']}}" style="width: 10rem;">
-        <div class="card-body">
-            {%if not(item['preferred_common_name'])%}
-            <h6 class="card-text"><i>{{item['name']}}</i></h6>
-            {%else%}
-            <h6 class="card-text">{{item['preferred_common_name']}}</h6>
-            {%endif%}
-        </div>
-        <a href="{{item['id']}}" class="stretched-link">
-        </a>
+<div class="card" style="width: 10rem;">
+    <img class="card-img-top" src="{{item['default_photo']['medium_url']}}" style="width: 10rem;">
+    <div class="card-body">
+        {%if not(item['preferred_common_name'])%}
+        <h6 class="card-text"><i>{{item['name']}}</i></h6>
+        {%else%}
+        <h6 class="card-text">{{item['preferred_common_name']}}</h6>
+        {%endif%}
     </div>
+    <a href="{{item['id']}}" class="stretched-link">
+    </a>
+</div>
 
-    {%endfor%}
-    {%endif%}
+{%endfor%}
+{%endif%}
 
-</body>
-
-</html>
+{% endblock %}

@@ -1,47 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Resultd</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
-    <script src="https://unpkg.com/jquery"></script>
-    <script src="https://unpkg.com/popper"></script>
-    <script src="https://unpkg.com/bootstrap"></script>
-</head>
+{% block content %}
+<h1>Animals and Plants in {{session["location"]|title}}</h1>
 
-<body>
-    <h1>Animals in this location</h1>
-    <!-- <ul>
-        {%for item in results %}
-        <li>{{item["species_guess"]}}</li>
-        {%endfor%}
-    </ul> -->
-    {%for item in results %}
-    <div class="col-lg-4 col-md-6 col-12">
-        <div class="card" style="width: 18rem;">
-            <div class="card-inner">
-                <div class="image-wrapper">
-                    <img src="{{ item['taxon']['default_photo']['medium_url']}}" alt="" class="card-hero"
-                        style="width: 18rem;">
-                </div>
-                <div class="card-contents">
-                    <a href="details/{{item['taxon']['id']}}" class="stretched-link">
-                    </a>
+{%for item in results %}
+<div class="col-lg-4 col-md-6 col-12">
+    <div class="card" style="width: 18rem;">
+        <div class="card-inner">
+            <div class="image-wrapper">
+                <img loading="lazy" src="{{ item['taxon']['default_photo']['medium_url']}}" alt="" class="card-hero"
+                    style="width: 18rem;">
+            </div>
+            <div class="card-contents">
+                <a href="details/{{item['taxon']['id']}}" class="stretched-link">
+                </a>
 
-                </div>
-                <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p>
-                <!-- {%if not(item['preferred_common_name'])%}
+            </div>
+            <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p>
+            <!-- {%if not(item['preferred_common_name'])%}
                 <p class="card-bio"><i>{{item['name']}}</i></p>
                 {%else%}
                 <p class="card-bio">{{item['taxon']['preferred_common_name']|title}}</p>
                 {%endif%} -->
-            </div>
         </div>
     </div>
-    {%endfor%}
-</body>
-
-</html>
+</div>
+{%endfor%}
+{%endblock%}

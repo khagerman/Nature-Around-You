@@ -1,43 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Address Form</title>
-</head>
+{% block content %}
+<h1>Enter a location to find animals, plants, and even bugs in the area</h1>
 
-<body>
-    <h1>Enter a location</h1>
-
-    <form action="/results">
-        <input type="text" name="location" placeholder="Enter Location">
-        <button>Go!</button>
-    </form>
-
-
-    <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css" />
-
-    <script type="text/javascript">
-        window.onload = function () {
-            placeSearch({
-                key: 'ObOOcgLBayNvuhkFMUAKvmh5y7pXteON',
-                container: document.querySelector('#search-input'),
-                useDeviceLocation: true,
-                collection: [
-                    'poi',
-                    'airport',
-                    'address',
-                    'adminArea',
-                ]
-            });
-        }
-    </script>
+<form action="/results">
+    <input type="text" name="location" placeholder="Enter Location">
+    <button class="btn btn-info">Search!</button>
+</form>
 
 
 
-</body>
 
-</html>
+{% endblock %}
