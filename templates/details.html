@@ -25,6 +25,7 @@
 <h3>Times observed:{{results[0]['observations_count']}}</h3>
 <h3>Conservation Status:</h3>
 
+{%if results[0]['rank']== "species"%}
 
 {%if not(results[0]['conservation_status'])%}
 
@@ -64,10 +65,10 @@
 
 
 <h3>Related Species</h3>
-{%if not(results[0]['children']) %}
+<!-- {%if not(results[0]['children']) %}
 <p>No related species found</p>
 {%else%}
-{%for item in results[0]['children'] %}
+<!-- {%for item in results[0]['children'] %}
 
 <div class="card" style="width: 10rem;">
     <img class="card-img-top" src="{{item['default_photo']['medium_url']}}" style="width: 10rem;">
@@ -82,7 +83,11 @@
     </a>
 </div>
 
-{%endfor%}
-{%endif%}
+{%endfor%} --> -->
+
+<button id="simular">Simular Species</button>
+<!-- {%endif%}
+
+{%endif%} -->
 
 {% endblock %}

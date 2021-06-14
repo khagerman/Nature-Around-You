@@ -89,6 +89,7 @@ def handle_search():
 def view_animal(id):
     """handle location and show search results"""
     id = id
+    session["nature_id"] = id
     classify_info = {"results": []}
     results = get_animal_details(id)
     classifications = results[0]["ancestor_ids"]
@@ -242,4 +243,14 @@ def save_animal(user_id, nature_id):
     except:
         db.session.rollback()
         flash(f"Oops, you already saved this!", "info")
+    flash(f"Plant or Animal Added!", "success")
     return redirect(f"/{user_id}/naturejournal")
+
+
+####simular species#######
+
+
+@app.route("/simularspecies")
+def show_simular():
+    id = session["nature_id"]
+    return jsonify({"nature_id": id})

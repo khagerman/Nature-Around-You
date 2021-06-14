@@ -4,7 +4,7 @@
 <h1>Animals and Plants in {{session["location"]|title}}</h1>
 
 {%for item in results %}
-<div class="col-lg-4 col-md-6 col-12">
+<div class="col">
     <div class="card" style="width: 18rem;">
         <div class="card-inner">
             <div class="image-wrapper">
@@ -16,12 +16,12 @@
                 </a>
 
             </div>
-            <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p>
-            <!-- {%if not(item['preferred_common_name'])%}
-                <p class="card-bio"><i>{{item['name']}}</i></p>
-                {%else%}
-                <p class="card-bio">{{item['taxon']['preferred_common_name']|title}}</p>
-                {%endif%} -->
+            <!-- <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p> -->
+            {%if not(item['taxon']['preferred_common_name'])%}
+            <p class="card-bio"><i>{{item['name']}}</i></p>
+            {%else%}
+            <p class="card-bio">{{item['taxon']['preferred_common_name']|title}}</p>
+            {%endif%}
         </div>
     </div>
 </div>
