@@ -1,30 +1,38 @@
 BASE_URL = "https://api.inaturalist.org/v1";
 
-$("#simular").addEventListener("click", function (e) {
+$("#similar").on("click", async function (e) {
   e.preventDefault();
-  getSimularSpecies();
+  $("#hidden_similar").show();
+  getSimilarSpecies();
 });
 
-async function getSimularSpecies() {
-  const id = await axios.get("/simularspecies", {
-    params: { nature_id: nature_id },
-  });
+async function getSimilarSpecies() {
+  const id = await axios.get("/similarspecies");
+  natureId = id.data.nature_id;
   const res = await axios.get(
-    `${BASE_URL}/identifications/similar_species?taxon_id=${id}`
+    `${BASE_URL}/identifications/similar_species?taxon_id=${natureId}`
   );
+  console.log(res);
+  for (result of res.data.results) {
+    let newLivingThing = showSimilar(result);
+    $("#hidden_similar").append(newLivingThing);
+  }
+  $("#similar").off("click");
 }
 
-// function showCupcakes(cupcake) {
-//   return `
-// <div data-id=${cupcake.id} class="col">
-// <li>Flavor:<b>${cupcake.flavor}</b>
-// <ul>
-//       <li>Size: ${cupcake.size}</li>
-//       <li>${cupcake.rating}/5.0</li>
-//     </ul>
-// </li>
-// <img class="img-thumbnail" width="100" height="110""
-//             src="${cupcake.image}">
+function showSimilar(result) {
+  let photo = result.taxon.default_photo.medium_url;
+  console.log(result.taxon.default_photo);
+  return `
+<div class="card" style="width: 10rem;">
+    <img class="card-img-top" src="${photo}" style="width: 10rem;">
+    <div class="card-body">
+        <h6 class="card-text">${result.taxon.preferred_common_name}</h6>
+      
+    </div>
+    <a href="${result.taxon.id}" class="stretched-link">
+    </a>
+</div>
 
-// `;
-// }
+`;
+}

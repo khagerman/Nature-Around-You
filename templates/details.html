@@ -4,10 +4,12 @@
 
 <h1>{{results[0]['preferred_common_name']|title}}</h1><i>{{results[0]['name']}}</i>
 {% if session['user_id'] %}
+{%if results[0]['rank']== "species"%}
 <form method="POST">
     <a href="/{{session['user_id']}}/save/{{results[0]['id']}}" type="button" class="btn btn-info">Save
         to Nature Journal</a>
 </form>
+{%endif%}
 {% else %}
 <a href="/login" type="button" class="btn btn-info"> Login to Save
 </a>
@@ -22,11 +24,11 @@
 {%if results[0]['taxon_photos'][2] %}
 <img src="{{results[0]['taxon_photos'][2]['photo']['medium_url']}}" class="img-fluid" alt="">
 {%endif%}
-<h3>Times observed:{{results[0]['observations_count']}}</h3>
-<h3>Conservation Status:</h3>
+
 
 {%if results[0]['rank']== "species"%}
-
+<h3>Times observed:{{results[0]['observations_count']}}</h3>
+<h3>Conservation Status:</h3>
 {%if not(results[0]['conservation_status'])%}
 
 <p>No conservation status available</p>
@@ -42,52 +44,34 @@
 {%elif results[0]['conservation_status']['status'] == 'CR' %}
 <p class="color-danger">Critically Endanged</p>
 {%endif%}
+{%endif%}
 
 
 
 
 <h3>Classfications</h3>
+<div class="row">
+    {%for item in classify_info['results'] %}
 
-{%for item in classify_info['results'] %}
-
-<div class="card" style="width: 10rem;">
-    <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width: 10rem;">
-    <div class="card-body">
-        <h6 class="card-text">{{item[0]['name']}}</h6>
-        <!-- <p>{{item[0]['wikipedia_summary']|safe}}</p> -->
+    <div class="card" style="width: 10rem;">
+        <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width: 10rem;">
+        <div class="card-body">
+            <h6 class="card-text">{{item[0]['name']}}</h6>
+            <!-- <p>{{item[0]['wikipedia_summary']|safe}}</p> -->
+        </div>
+        <a href="{{item[0]['id']}}" class="stretched-link">
+        </a>
     </div>
-    <a href="{{item[0]['id']}}" class="stretched-link">
-    </a>
+
+    {%endfor%}
 </div>
 
 
-{%endfor%}
+<button data-toggle="collapse" class="btn btn-info" id="similar">Similar Species</button>
 
+<div id="hidden_similar" type="hidden" class="row">
 
-<h3>Related Species</h3>
-<!-- {%if not(results[0]['children']) %}
-<p>No related species found</p>
-{%else%}
-<!-- {%for item in results[0]['children'] %}
-
-<div class="card" style="width: 10rem;">
-    <img class="card-img-top" src="{{item['default_photo']['medium_url']}}" style="width: 10rem;">
-    <div class="card-body">
-        {%if not(item['preferred_common_name'])%}
-        <h6 class="card-text"><i>{{item['name']}}</i></h6>
-        {%else%}
-        <h6 class="card-text">{{item['preferred_common_name']}}</h6>
-        {%endif%}
-    </div>
-    <a href="{{item['id']}}" class="stretched-link">
-    </a>
 </div>
 
-{%endfor%} --> -->
-
-<button id="simular">Simular Species</button>
-<!-- {%endif%}
-
-{%endif%} -->
 
 {% endblock %}
