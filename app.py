@@ -250,7 +250,10 @@ def save_animal(user_id, nature_id):
 ####simular species#######
 
 
-@app.route("/simularspecies")
-def show_simular():
-    id = session["nature_id"]
-    return jsonify({"nature_id": id})
+@app.route("/similarspecies")
+def show_similar():
+    nature_id = session["nature_id"]
+    return jsonify({"nature_id": nature_id})
+
+
+############filter##################
