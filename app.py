@@ -1,3 +1,4 @@
+import pdb
 from flask import (
     Flask,
     render_template,
@@ -17,7 +18,7 @@ from forms import UserForm, LoginForm
 
 MAP_API_BASE_URL = "http://www.mapquestapi.com/geocoding/v1"
 NATURE_API_BASE_URL = "https://api.inaturalist.org/v1"
-
+searchresults = {}
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -34,6 +35,7 @@ db.create_all()
 
 
 def get_coords(location):
+    """Turn given location into coordinates"""
     res = requests.get(
         f"{MAP_API_BASE_URL}/address", params={"key": SECRET_KEY, "location": location}
     )
@@ -64,7 +66,17 @@ def get_info(coords):
     return get_results(res)
 
 
+def get_next_page(coords):
+    """Get next page of api data"""
+    res = requests.get(
+        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=200&page=2"
+    )
+
+    return get_results(res)
+
+
 def get_animal_details(id):
+    """Get specific information on a animal or plant"""
     res = requests.get(f"{NATURE_API_BASE_URL}/taxa/{id}")
     return get_results(res)
 
@@ -81,13 +93,25 @@ def handle_search():
     location = request.args["location"]
     session["location"] = location
     coords = get_coords(location)
+    session["coords"] = coords
     results = get_info(coords)
+    searchresults["results"] = results
+
+    return render_template("results.html", results=results)
+
+
+@app.route("/results/2", methods=["GET", "POST"])
+def more_results():
+    """get second page of api data"""
+    results = get_next_page(session["coords"])
+    searchresults["results"].append(results)
+
     return render_template("results.html", results=results)
 
 
 @app.route("/details/<int:id>", methods=["GET", "POST"])
 def view_animal(id):
-    """handle location and show search results"""
+    """view detail page on clicked on animal or plant"""
     id = id
     session["nature_id"] = id
     classify_info = {"results": []}
@@ -96,10 +120,8 @@ def view_animal(id):
 
     for id in classifications:
         data = get_animal_details(id)
-        # name = data["taxon"]["preferred_common_name"]
-        # photo = data["taxon_photos"]["small_url"]
+
         classify_info["results"].append(data)
-        # classify_info["photo"] = photo
 
     return render_template(
         "details.html",
@@ -113,6 +135,7 @@ def view_animal(id):
 ############login/logout logic######################
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
+    """Register user"""
     form = UserForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -134,6 +157,7 @@ def register_user():
 
 @app.route("/login", methods=["GET", "POST"])
 def login_user():
+    """login user and authenicate"""
     form = UserForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -152,6 +176,7 @@ def login_user():
 
 @app.route("/logout")
 def logout_user():
+    """logout user and remove from session"""
     session.pop("user_id")
     flash("Goodbye!", "info")
     return redirect("/")
@@ -179,20 +204,6 @@ def show_saved_animals(id):
     return render_template(
         "naturejournal.html", user=user, users_living_things=users_living_things
     )
-
-
-# def is_saved_by_user(living_thing):
-#     """See if living_thing has been saved"""
-
-#     is_saved = (
-#         db.session.query(UserLivingThing)
-#         .filter(int(LivingThing.nature_id) == int(living_thing[0]["id"]))
-#         .filter(UserLivingThing.user_id == session["user_id"])
-#         .first()
-#     )
-#     if is_saved:
-#         return True
-#     return False
 
 
 def in_database(living_thing_entered):
@@ -252,8 +263,76 @@ def save_animal(user_id, nature_id):
 
 @app.route("/similarspecies")
 def show_similar():
+    """show similar species when button clicked on front-end"""
     nature_id = session["nature_id"]
     return jsonify({"nature_id": nature_id})
 
 
 ############filter##################
+
+
+@app.route("/filter")
+def filter_results():
+    """filter results based on user selection"""
+
+    if request.args.get("filterresults") == "animals":
+
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][1] == 1
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "plants":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][1] == 47126
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "insects":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4] == 47158
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "reptiles":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4] == 26036
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "amphibians":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4] == 20978
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "birds":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4] == 3
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "mammals":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4] == 40151
+        ]
+        return render_template("results.html", results=results)
+    elif request.args.get("filterresults") == "fish":
+        results = [
+            result
+            for result in searchresults["results"]
+            if result["taxon"]["ancestor_ids"][4]
+            in [47178, 85497, 49099, 60450, 47273, 49231]
+        ]
+        return render_template("results.html", results=results)
+    else:
+        flash(f"Oops, something went wrong", "danger")
+        redirect("/")

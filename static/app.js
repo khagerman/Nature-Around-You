@@ -2,10 +2,15 @@ BASE_URL = "https://api.inaturalist.org/v1";
 
 $("#similar").on("click", async function (e) {
   e.preventDefault();
-  $("#hidden_similar").show();
-  getSimilarSpecies();
+  const $this = $(this);
+  if ($this.hasClass("clicked-once")) {
+    $("#hidden_similar").hide();
+  } else {
+    $("#hidden_similar").show();
+    getSimilarSpecies();
+    $this.addClass("clicked-once");
+  }
 });
-
 async function getSimilarSpecies() {
   const id = await axios.get("/similarspecies");
   natureId = id.data.nature_id;

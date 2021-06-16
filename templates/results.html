@@ -2,53 +2,35 @@
 
 {% block content %}
 <h1>Animals and Plants in {{session["location"]|title}}</h1>
-<div class="container">
-    <div class="row searchFilter">
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input id="table_filter" type="text" class="form-control"
-                    aria-label="Text input with segmented button dropdown">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                            class="label-icon">Category</span> <span class="caret">&nbsp;</span></button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <ul class="category_filters">
-                            <li>
-                                <input class="cat_type category-input" data-label="All" id="all" value="" name="radios"
-                                    type="radio"><label for="all">All</label>
-                            </li>
-                            <li>
-                                <input type="radio" name="radios" id="Design" value="Design"><label
-                                    class="category-label" for="Design">Design</label>
-                            </li>
-                            <li>
-                                <input type="radio" name="radios" id="Marketing" value="Marketing"><label
-                                    class="category-label" for="Marketing">Marketing</label>
-                            </li>
-                            <li>
-                                <input type="radio" name="radios" id="Programming" value="Programming"><label
-                                    class="category-label" for="Programming">Programming</label>
-                            </li>
-                            <li>
-                                <input type="radio" name="radios" id="Sales" value="Sales"><label class="category-label"
-                                    for="Sales">Sales</label>
-                            </li>
-                            <li>
-                                <input type="radio" name="radios" id="Support" value="Support"><label
-                                    class="category-label" for="Support">Support</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <button id="searchBtn" type="button" class="btn btn-secondary btn-search"><span
-                            class="glyphicon glyphicon-search">&nbsp;</span> <span
-                            class="label-icon">Search</span></button>
-                </div>
-            </div>
+<!-- filter -->
+<form action="/filter">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="filter">Filter Results</label>
         </div>
+        <select name="filterresults" class="custom-select" id="filter" onchange="this.form.submit();">
+            <option value="">Filter</option>
+            <option value="animals">Animals</option>
+            <option value="plants">Plants</option>
+            <option value="insects">Insects</option>
+            <option value="reptiles">Reptiles</option>
+            <option value="amphibians">Amphibians</option>
+            <option value="birds">Birds</option>
+            <option value="fish">Fish</option>
+            <option value="mammals">Mammals</option>
+        </select>
+        <!-- <button type="submit" class="btn btn-primary my-1">filter</button> -->
     </div>
-</div>
-<div class="row">
+
+
+</form>
+
+{%if request.args.get('filterresults')%}
+<h2 class="text-info">Fitered by {{request.args.get("filterresults")|title}}</h2>
+{%endif%}
+<!-- results from search -->
+<div class="row m-3 d-flex justify-content-evenly">
     {%for item in results %}
     <div class="col">
         <div class="card" style="width: 18rem;">
@@ -64,9 +46,11 @@
                 </div>
                 <!-- <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p> -->
                 {%if not(item['taxon']['preferred_common_name'])%}
-                <p class="card-bio"><i>{{item['name']}}</i></p>
-                {%else%}
+                <p class="card-bio"><i>{{item['taxon']['name']}}</i></p>
+                {%elif item['taxon']['preferred_common_name']%}
                 <p class="card-bio">{{item['taxon']['preferred_common_name']|title}}</p>
+                {%else%}
+                <p class="card-bio">No common or scientific name listed</p>
                 {%endif%}
             </div>
         </div>
@@ -74,4 +58,7 @@
 
     {%endfor%}
 </div>
+<form action="/results/2">
+    <a href="/results/2">Next Page</a>
+</form>
 {%endblock%}

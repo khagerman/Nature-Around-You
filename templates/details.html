@@ -16,48 +16,170 @@
 {%endif%}
 <h3>Description</h3>
 <p>{{results[0]['wikipedia_summary']|safe}}</p>
+<div class="row m-3 d-flex justify-content-evenly">
+    <div class="col">
+        <img src="{{results[0]['taxon_photos'][0]['photo']['large_url']}}" class="img-fluid img-thumbnail" alt="">
+    </div>
+    {%if results[0]['taxon_photos'][1] %}
+    <div class="col">
+        <img src="{{results[0]['taxon_photos'][1]['photo']['medium_url']}}" class="img-fluid img-thumbnail" alt="">
+    </div>
+    {%endif%}
+    {%if results[0]['taxon_photos'][2] %}
+    <div class="col">
+        <img src="{{results[0]['taxon_photos'][2]['photo']['medium_url']}}" class="img-fluid img-thumbnail" alt="">
+    </div>
+    {%endif%}
+</div>
 
-<img src="{{results[0]['taxon_photos'][0]['photo']['large_url']}}" class="img-fluid" alt="">
-{%if results[0]['taxon_photos'][1] %}
-<img src="{{results[0]['taxon_photos'][1]['photo']['medium_url']}}" class="img-fluid" alt="">
-{%endif%}
-{%if results[0]['taxon_photos'][2] %}
-<img src="{{results[0]['taxon_photos'][2]['photo']['medium_url']}}" class="img-fluid" alt="">
-{%endif%}
 
 
 {%if results[0]['rank']== "species"%}
-<h3>Times observed:{{results[0]['observations_count']}}</h3>
+<p>Times observed:{{results[0]['observations_count']}}</p>
 <h3>Conservation Status:</h3>
 {%if not(results[0]['conservation_status'])%}
 
 <p>No conservation status available</p>
 
 {%elif results[0]['conservation_status']['status'] == 'VU' %}
-<p class="color-warning">Vulnerable</p>
+<p class="text-warning">Vulnerable</p>
 {%elif results[0]['conservation_status']['status'] == 'LC'%}
-<p>Least Concern</p>
+<p class="text-success">Least Concern</p>
 {%elif results[0]['conservation_status']['status'] == 'NT' %}
-<p>Near Threatened</p>
+<p class="text-warning">Near Threatened</p>
 {%elif results[0]['conservation_status']['status'] == 'EN'%}
-<p>Endangered</p>
+<p class="text-danger">Endangered</p>
 {%elif results[0]['conservation_status']['status'] == 'CR' %}
-<p class="color-danger">Critically Endanged</p>
+<p class="text-danger">Critically Endanged</p>
 {%endif%}
 {%endif%}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Accordion Item #1
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse
+                plugin adds the appropriate classes that we use to style each element. These classes control the overall
+                appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go
+                within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Accordion Item #2
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse
+                plugin adds the appropriate classes that we use to style each element. These classes control the overall
+                appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go
+                within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Accordion Item #3
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse
+                plugin adds the appropriate classes that we use to style each element. These classes control the overall
+                appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go
+                within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+        </div>
+    </div>
+</div>
+Flush
+Add .accordion-flush to remove the default background-color, some borders, and some rounded corners to render accordions
+edge-to-edge with their parent container.
 
+Accordion Item #1
+Accordion Item #2
+Accordion Item #3
+Copy
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Accordion Item #1
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+                <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Accordion Item #2
+            </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+                <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being
+                filled with some actual content.</div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Accordion Item #3
+            </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+                <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
+                happening here in terms of content, but just filling up the space to make it look, at least at first
+                glance, a bit more representative of how this would look in a real-world application.</div>
+        </div>
+    </div>
+</div>
+<button data-toggle="collapse" class="btn btn-info" id="similar">
+    <h3>Similar Species</h3>
+</button>
 
+<div id="hidden_similar" type="hidden" class="row m-3 d-flex justify-content-evenly">
+
+</div>
 
 
 <h3>Classfications</h3>
-<div class="row">
+<div class="row m-3 d-flex justify-content-evenly">
     {%for item in classify_info['results'] %}
 
-    <div class="card" style="width: 10rem;">
-        <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width: 10rem;">
+    <div class="card m-3">
+        <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" style="width:10rem;"
+            loading="lazy">
         <div class="card-body">
             <h6 class="card-text">{{item[0]['name']}}</h6>
-            <!-- <p>{{item[0]['wikipedia_summary']|safe}}</p> -->
+
         </div>
         <a href="{{item[0]['id']}}" class="stretched-link">
         </a>
@@ -67,11 +189,6 @@
 </div>
 
 
-<button data-toggle="collapse" class="btn btn-info" id="similar">Similar Species</button>
-
-<div id="hidden_similar" type="hidden" class="row">
-
-</div>
 
 
 {% endblock %}
