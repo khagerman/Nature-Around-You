@@ -47,9 +47,6 @@ def get_coords(location):
     return coords
 
 
-# show location name?
-
-
 def get_results(data):
     """turn json into python"""
 
@@ -66,13 +63,13 @@ def get_info(coords):
     return get_results(res)
 
 
-def get_next_page(coords):
-    """Get next page of api data"""
-    res = requests.get(
-        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=200&page=2"
-    )
+# # def get_next_page(coords):
+# #     """Get next page of api data"""
+# #     res = requests.get(
+# #         f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=200&page=2"
+# #     )
 
-    return get_results(res)
+#     return get_results(res)
 
 
 def get_animal_details(id):
@@ -100,13 +97,13 @@ def handle_search():
     return render_template("results.html", results=results)
 
 
-@app.route("/results/2", methods=["GET", "POST"])
-def more_results():
-    """get second page of api data"""
-    results = get_next_page(session["coords"])
-    searchresults["results"].append(results)
+# @app.route("/results/2", methods=["GET", "POST"])
+# def more_results():
+#     """get second page of api data"""
+#     results = get_next_page(session["coords"])
+#     searchresults["results"].append(results)
 
-    return render_template("results.html", results=results)
+#     return render_template("results.html", results=results)
 
 
 @app.route("/details/<int:id>", methods=["GET", "POST"])
@@ -149,7 +146,7 @@ def register_user():
             form.username.errors.append("Username taken.  Please pick another")
             return render_template("register.html", form=form)
         session["user_id"] = new_user.id
-        flash("Welcome! Successfully Created Your Account!", "success")
+        flash("Welcome! Account Created!", "success")
         return redirect("/")
 
     return render_template("register.html", form=form)
@@ -188,12 +185,14 @@ def logout_user():
 @app.route("/<id>/naturejournal")
 def show_saved_animals(id):
     """show users saved plants/animals"""
-
+    user = User.query.filter_by(id=id).first()
     if "user_id" not in session:
         flash(f"You do not have permisson to view this page!", "danger")
         return redirect("/login")
+    if user.id != (session["user_id"]):
+        flash(f"You do not have permisson to view this page!", "danger")
+        return redirect("/")
 
-    user = User.query.filter_by(id=id).first()
     users_living_things = (
         db.session.query(LivingThing)
         .join(UserLivingThing)
