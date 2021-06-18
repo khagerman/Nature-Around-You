@@ -39,7 +39,7 @@
 
 
 {%if results[0]['rank']== "species"%}
-<p>Times observed:{{results[0]['observations_count']}}</p>
+<!-- <p>Times observed:{{results[0]['observations_count']}}</p> -->
 <h3>Conservation Status:</h3>
 {%if not(results[0]['conservation_status'])%}
 
@@ -56,21 +56,25 @@
 {%elif results[0]['conservation_status']['status'] == 'CR' %}
 <p class="text-danger">Critically Endanged</p>
 {%endif%}
-{%endif%}
-<h3>Similar Species</h3>
-<button data-toggle="collapse" class="btn btn-info" id="similar">
-    View Similar Species
+
+<h3>Similar Species <button data-toggle="collapse" class="btn btn-info" id="similar">
+        View Similar Species <i class="fas fa-chevron-down"></i></h3>
+
 </button>
 
 <div id="hidden_similar" type="hidden" class="row d-flex justify-content-evenly">
 
 </div>
-
+{%endif%}
 
 <h3>Classfications</h3>
-<div class="row m-3 d-flex justify-content-evenly">
+
+<div class="row">
     {%for item in classify_info['results'] %}
-    <div class="col-2">
+    {%if item[0]['name']== "life"%}
+    <p>Oops, life is the top!</p>
+    {%endif%}
+    <div class="col m-3">
         <div class="card">
             <!-- style="width:10rem;" -->
             <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" loading="lazy">

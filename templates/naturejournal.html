@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{user.username|title}}'s Saved Plants and Animals</h1>
-<h6>Save what you've seen or what interests you, really it's up to you! </h6>
+<h1 class="text-center">{{user.username|title}}'s Saved Plants and Animals</h1>
+<h6 class="text-center">Save what you've seen or what interests you, really it's up to you! </h6>
 {%if not(users_living_things)%}
-<h4>Nothing saved yet!</h4>
+<h4 class="text-warning text-center">Nothing saved yet!</h4>
 {%else%}
 <div class="row">
     {%for living_thing in users_living_things %}
