@@ -60,7 +60,7 @@ def get_results(data):
 def get_info(coords):
     """Get species based on location"""
     res = requests.get(
-        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=200"
+        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=450"
     )
 
     return get_results(res)
@@ -251,10 +251,11 @@ def save_animal(user_id, nature_id):
     db.session.add(save_new)
     try:
         db.session.commit()
+        flash(f"Plant or Animal Added!", "success")
     except:
         db.session.rollback()
         flash(f"Oops, you already saved this!", "info")
-    flash(f"Plant or Animal Added!", "success")
+
     return redirect(f"/{user_id}/naturejournal")
 
 

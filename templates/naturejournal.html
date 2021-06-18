@@ -1,29 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{user.username}}'s Saved Plants and Animals</h1>
-<h3>Save what you've seen or what interests you, really it's up to you! </h3>
+<h1>{{user.username|title}}'s Saved Plants and Animals</h1>
+<h6>Save what you've seen or what interests you, really it's up to you! </h6>
 {%if not(users_living_things)%}
-<h3>Nothing saved yet!</h3>
+<h4>Nothing saved yet!</h4>
 {%else%}
-{%for living_thing in users_living_things %}
-<div class="col-lg-4 col-md-6 col-12">
-    <div class="card" style="width: 18rem;">
-        <div class="card-inner">
-            <div class="image-wrapper">
-                <img src="{{ living_thing.image_url}}" alt="" loading="lazy" class="card-hero" style="width: 18rem;">
-            </div>
-            <div class="card-contents">
-                <a href="/details/{{living_thing.nature_id}}" class="stretched-link">
-                </a>
+<div class="row">
+    {%for living_thing in users_living_things %}
+
+    <div class="col m-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-inner">
+                <div class="image-wrapper">
+                    <img src="{{ living_thing.image_url}}" alt="" loading="lazy" class="card-hero"
+                        style="width: 18rem;">
+                </div>
+                <div class="card-contents">
+                    <a href="/details/{{living_thing.nature_id}}" class="stretched-link">
+                    </a>
+
+                </div>
+                <p class="card-bio"> {{living_thing.name|title}}</p>
 
             </div>
-            <p class="card-bio"> {{living_thing.name|title}}</p>
-
         </div>
     </div>
-</div>
 
-{%endfor%}
+    {%endfor%}
+</div>
 {%endif%}
 {% endblock %}

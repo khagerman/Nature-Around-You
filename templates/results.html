@@ -30,35 +30,53 @@
 <h2 class="text-info">Fitered by {{request.args.get("filterresults")|title}}</h2>
 {%endif%}
 <!-- results from search -->
-<div class="row m-3 d-flex justify-content-evenly">
-    {%for item in results %}
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <div class="card-inner">
-                <div class="image-wrapper">
-                    <img loading="lazy" src="{{ item['taxon']['default_photo']['medium_url']}}" alt="" class="card-hero"
-                        style="width: 18rem;">
-                </div>
-                <div class="card-contents">
-                    <a href="details/{{item['taxon']['id']}}" class="stretched-link">
-                    </a>
+<div class="container">
+    {%if results%}
+    <div class="card-columns">
+        <!-- data-masonry='{"percentPosition": true }' -->
 
+        {%for item in results %}
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card" style="width:18rem;">
+                <div class="card-inner">
+                    <div>
+                        <img loading="lazy" src="{{ item['taxon']['default_photo']['medium_url']}}" alt=""
+                            class="card-hero" style="width:18rem;">
+                    </div>
+                    <div class="card-contents">
+                        <a href="details/{{item['taxon']['id']}}" class="stretched-link">
+                        </a>
+
+                    </div>
+
+                    {%if not(item['taxon']['preferred_common_name'])%}
+                    <p class="card-title text-center text-dark"><i>{{item['taxon']['name']}}</i></p>
+                    {%elif item['taxon']['preferred_common_name']%}
+                    <p class="card-title text-center text-dark">{{item['taxon']['preferred_common_name']|title}}</p>
+                    {%else%}
+                    <p class="card-bio">No common or scientific name listed</p>
+                    {%endif%}
                 </div>
-                <!-- <p class="card-bio"> {{item['taxon']['preferred_common_name']|title}}</p> -->
-                {%if not(item['taxon']['preferred_common_name'])%}
-                <p class="card-bio"><i>{{item['taxon']['name']}}</i></p>
-                {%elif item['taxon']['preferred_common_name']%}
-                <p class="card-bio">{{item['taxon']['preferred_common_name']|title}}</p>
-                {%else%}
-                <p class="card-bio">No common or scientific name listed</p>
-                {%endif%}
             </div>
         </div>
-    </div>
 
-    {%endfor%}
+        {%endfor%}
+        {%else%}
+        <h2>Oops, no plants or animals found.</h2>
+    </div>
 </div>
+{%endif%}
+
+
+
+<!-- 
 <form action="/results/2">
+    {%if results%}
     <a href="/results/2">Next Page</a>
-</form>
+    {%else%}
+    <h6>You've reached the end!</h6>
+    {%endif%}
+</form> -->
+
+
 {%endblock%}

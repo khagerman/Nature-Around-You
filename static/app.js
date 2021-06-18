@@ -29,15 +29,22 @@ function showSimilar(result) {
   let photo = result.taxon.default_photo.medium_url;
   console.log(result.taxon.default_photo);
   return `
-<div class="card" style="width: 10rem;">
-    <img class="card-img-top" src="${photo}" style="width: 10rem;">
+  <div class="col m-3">
+<div class="card" style="width: 14rem;">
+    <img class="card-img-top" src="${photo}" style="width: 14rem;">
     <div class="card-body">
-        <h6 class="card-text">${result.taxon.preferred_common_name}</h6>
+        <h6 class="card-text">${
+          result.taxon.preferred_common_name
+            ? result.taxon.preferred_common_name
+            : result.taxon.name
+        }</h6>
       
     </div>
     <a href="${result.taxon.id}" class="stretched-link">
     </a>
 </div>
+</div>
 
 `;
 }
+$(".carousel").carousel();
