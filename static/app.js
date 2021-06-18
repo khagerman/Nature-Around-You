@@ -47,4 +47,6 @@ function showSimilar(result) {
 
 `;
 }
+// bootstrap carosel and collapse code
 $(".carousel").carousel();
+$(".collapse").collapse();
