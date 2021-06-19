@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{%if not(results[0]['preferred_common_name'])%}
+<h1><i>{{results[0]['name']}}</i></h1>
+{%else%}
 <h1>{{results[0]['preferred_common_name']|title}}</h1><i>{{results[0]['name']}}</i>
+{%endif%}
 {% if session['user_id'] %}
 {%if results[0]['rank']== "species"%}
 <form method="POST">
@@ -76,7 +79,7 @@
     {%endif%}
     <div class="col m-3">
         <div class="card">
-            <!-- style="width:10rem;" -->
+
             <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" loading="lazy">
             <div class="card-body">
                 <h6 class="card-text">{{item[0]['name']}}</h6>

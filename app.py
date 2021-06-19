@@ -183,11 +183,11 @@ def logout_user():
 
 
 @app.route("/<id>/naturejournal")
-def show_saved_animals(id):
+def show_nature_journal(id):
     """show users saved plants/animals"""
     user = User.query.filter_by(id=id).first()
     if "user_id" not in session:
-        flash(f"You do not have permisson to view this page!", "danger")
+        flash(f"Please login to view this page!", "danger")
         return redirect("/login")
     if user.id != (session["user_id"]):
         flash(f"You do not have permisson to view this page!", "danger")
@@ -221,15 +221,15 @@ def in_database(living_thing_entered):
         db.session.commit()
 
 
-def show_saved_animals(id):
-    """show users saved plants/animals"""
+# def show_saved_animals(id):
+#     """show users saved plants/animals"""
 
-    if "user_id" not in session:
-        flash(f"You do not have permisson to view this page!", "danger")
-        return redirect("/login")
+#     if "user_id" not in session:
+#         flash(f"You do not have permisson to view this page!", "danger")
+#         return redirect("/login")
 
-    user = User.query.filter_by(id=id).first()
-    return render_template("naturejournal.html", user=user)
+#     user = User.query.filter_by(id=id).first()
+#     return render_template("naturejournal.html", user=user)
 
 
 @app.route("/<int:user_id>/save/<int:nature_id>", methods=["GET", "POST"])
@@ -253,7 +253,7 @@ def save_animal(user_id, nature_id):
         flash(f"Plant or Animal Added!", "success")
     except:
         db.session.rollback()
-        flash(f"Oops, you already saved this!", "info")
+        flash(f"Oops, you already saved this!", "warning")
 
     return redirect(f"/{user_id}/naturejournal")
 
