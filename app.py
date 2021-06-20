@@ -111,21 +111,17 @@ def view_animal(id):
     """view detail page on clicked on animal or plant"""
     id = id
     session["nature_id"] = id
-    classify_info = {"results": []}
+
     results = get_animal_details(id)
     classifications = results[0]["ancestor_ids"]
-
-    for id in classifications:
-        data = get_animal_details(id)
-
-        classify_info["results"].append(data)
+    session["classifications"] = classifications
 
     return render_template(
         "details.html",
         results=results,
         id=id,
-        classifications=classifications,
-        classify_info=classify_info,
+        # classifications=classifications,
+        # classify_info=classify_info,
     )
 
 
@@ -266,6 +262,21 @@ def show_similar():
     """show similar species when button clicked on front-end"""
     nature_id = session["nature_id"]
     return jsonify({"nature_id": nature_id})
+
+
+####classifications#######
+
+
+@app.route("/classifications")
+def show_classifications():
+    """shows species classifications when button clicked on front-end"""
+    classifications = session["classifications"]
+    classify_info = {"results": []}
+
+    for id in classifications:
+        data = get_animal_details(id)
+        classify_info["results"].append(data)
+    return jsonify(classify_info)
 
 
 ############filter##################

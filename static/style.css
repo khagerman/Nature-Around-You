@@ -79,3 +79,6 @@
     font-size: 1rem;
   } /*1rem = 16px*/
 }
+.hidden {
+  display: none;
+}

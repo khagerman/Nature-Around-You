@@ -1,0 +1,10 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 95" width="96" height="95">
+	<title>Screen Shot 2021-06-18 at 11</title>
+	<defs>
+		<image  width="96" height="95" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABfCAMAAAAgajJyAAAAAXNSR0IB2cksfwAAAVBQTFRFAAAAqqr/0NnZ+7Ky////+6Wl0dHRAAAA+qSk/vLy////////////+e7w/vDw/f39/+PjgICA+r/B+vr8+Pj41dXV1dXV//v75eXl/f39gID/3+TnzNbW0NXY4+PnyNvb0dHo/v7+v9/f/v7+29vbqtXV9ff37vLy+/v7/f399PT0zObm/v7+////0tLX2uDg8vT0////1dvg+Pn5/v7++fn5////8vLy0tXY9/j61dnd19ve19nd////8vLygP///f395eXr/////ebm/f3939/m4ODm4efn5OTp3+Po4eTo+vr63+Ll4OLn3N/j////+fn75ujq193j+fr68PDz29vb////4ubo/Pz8/v7+0dTZ9ff419fk9/f38/X10tLZ4uLp0tba+/v7zN3d0tfZ3eDk3eHh3d3j4+Pj5ubm+vz8+/v7////xNjY/v7+mZmZWUTURwAAAHB0Uk5TAAMb2v+4CwE1/AMBAnv+cvsCnKkjBgz+HaUCYBnkPw4L8gj3BwaWmO7mRgrw3y0p7QQx+PHjBhRP6HiTy+8nAucn+9qRKCkrLzdDaFl9twp5+C2eVQ4FhMX/WPATXK4oIz52D3JLPC0bCuA6/g3+BQz8fB4AAAKmSURBVHic3ZnXYxMxDMavIFKoCyWQlD0KgQJN2buFsvcoe++9//83MmjIObb02bJ5QE85S/p+lu27c3xFYdnQosX0x5ZUhm2v2pZS2ZaNJJU35LDRdPrLXfpEKxIN1Jhbvm0rE8gP++XbRegBrH7LTGZ9oqpK37l8LFOtJkBfRYD0FfMA6scTYMAqTsWspppSn6gu9NI9TQEAEkZhXA1Yw+rTWpdvXQiA1rN93OAaoyB92siOwabNQ1qAcx5LARV7MQcCtgBd3KoBOBbSYMxEVQEYuJ2dUSPxgG2WvudJXI8GbAfnsBELIEyfaEcswICAhRUdDGhw+jsnd/V+744E7GEAptQ2FQdo9ulPl117LcU4APkL2Ndp3N+7PpAacLDTeKh3fVi9Ti3Pkfro0WPH+xqMEjDgOnFyZrb/uvOKayYE2DYRNUY9/VNybDWGgBdANJ0bgEc6AMDknQ7oyyAgIDRu9yUGzvXdMQGEBphRWAYDDJtwxtYNR/DhZxkASOCDWQCEqKgARXFOAizsHWMBYh1CDAQoivO5Af4ipLsABFyILQAFePMTAere/CkJcFFZgJECLiH6NX++2IPLugLGxYgrOkBVCqCrKn3gFXtNBbguA24ARzL+bOAvxU3gKNefLRdAt24rAPNdP3vCd+euqO/fENbkAlp2T5oFfyowQh0TjkC9efe7fv+DCiR40x6ABbSMPU/3Zj3EAf6zN0bgUbfwxxCAO8X9G/WklPPU4AVElfDsedv5Ih+A6OWr129AfXCMNPZfA5IQ3uYGjOUG8B/fEgBY/QSAJg/QEwR9NcDzsSUZQRogNUDW1xHeIQAN4f2Hj58+f2lkJHTt67fcBPqenRC/BwPtR/Z5kABqhAz4B7ecCgEBNAgQEM34iQNiUL9a0b8BiEB14X8M68IAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Background" href="#img1" x="0" y="0" />
+</svg>

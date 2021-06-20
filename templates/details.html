@@ -65,31 +65,23 @@
 
 </button>
 
-<div id="hidden_similar" type="hidden" class="row d-flex justify-content-evenly">
+<div id="hidden_similar" class="row d-flex justify-content-evenly">
 
 </div>
 {%endif%}
 
-<h3>Classfications</h3>
 
-<div class="row">
-    {%for item in classify_info['results'] %}
-    {%if item[0]['name']== "life"%}
-    <p>Oops, life is the top!</p>
-    {%endif%}
-    <div class="col m-3">
-        <div class="card">
+<h3>Classfications <button data-toggle="collapse" class="btn btn-info" id="classifybutton">
+        View Classfications <i class="fas fa-chevron-down"></i></h3>
 
-            <img class="card-img-top" src="{{item[0]['taxon_photos'][0]['photo']['small_url']}}" loading="lazy">
-            <div class="card-body">
-                <h6 class="card-text">{{item[0]['name']}}</h6>
-
-            </div>
-            <a href="{{item[0]['id']}}" class="stretched-link">
-            </a>
-        </div>
+</button>
+<div class="loading text-center  hidden">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
-    {%endfor%}
+</div>
+<div class="row" id="classifications">
+
 </div>
 
 
