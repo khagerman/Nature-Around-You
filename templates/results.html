@@ -20,7 +20,7 @@
             <option value="fish">Fish <i class="fas fa-fish"></i></option>
             <option value="mammals">Mammals <i class="fas fa-otter"></i></option>
         </select>
-        <!-- <button type="submit" class="btn btn-primary my-1">filter</button> -->
+
     </div>
 
 
@@ -30,10 +30,10 @@
 <h2 class="text-info">Fitered by {{request.args.get("filterresults")|title}}</h2>
 {%endif%}
 <!-- results from search -->
-<div class="container">
+<div class="container-fluid">
     {%if results%}
     <div class="card-columns">
-        <!-- data-masonry='{"percentPosition": true }' -->
+
 
         {%for item in results %}
         <div class="col-sm-6 col-lg-4 mb-4">
@@ -41,7 +41,7 @@
                 <div class="card-inner">
                     <div>
                         <img loading="lazy" src="{{ item['taxon']['default_photo']['medium_url']}}" alt=""
-                            class="card-hero" style="width:18rem;">
+                            class="card-hero rounded-top img-responsive" style="width:17.90rem;">
                     </div>
                     <div class="card-contents">
                         <a href="details/{{item['taxon']['id']}}" class="stretched-link">
@@ -69,14 +69,7 @@
 
 
 
-<!-- 
-<form action="/results/2">
-    {%if results%}
-    <a href="/results/2">Next Page</a>
-    {%else%}
-    <h6>You've reached the end!</h6>
-    {%endif%}
-</form> -->
+
 
 
 {%endblock%}

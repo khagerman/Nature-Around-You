@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1 class="text-center">{{user.username|title}}'s Saved Plants and Animals</h1>
-<h6 class="text-center">Save what you've seen or what interests you, really it's up to you! </h6>
+<h6 class="text-center text-muted">Save what you've seen or what interests you, really it's up to you! </h6>
 {%if not(users_living_things)%}
 <h4 class="text-warning text-center">Nothing saved yet!</h4>
 {%else%}
@@ -10,11 +10,11 @@
     {%for living_thing in users_living_things %}
 
     <div class="col m-3">
-        <div class="card" style="width: 18rem;">
+        <div class="card rounded" style="width: 18rem;">
             <div class="card-inner">
                 <div class="image-wrapper">
-                    <img src="{{ living_thing.image_url}}" alt="" loading="lazy" class="card-hero"
-                        style="width: 18rem;">
+                    <img src="{{ living_thing.image_url}}" alt="" loading="lazy" class="card-hero rounded-top"
+                        style="width: 17.90rem;">
                 </div>
                 <div class="card-contents">
                     <a href="/details/{{living_thing.nature_id}}" class="stretched-link">
