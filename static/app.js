@@ -20,10 +20,16 @@ $("#similar").on("click", async function (e) {
   const $this = $(this);
   if ($this.hasClass("clicked-once")) {
     $("#hidden_similar").hide();
+    $("#similar").html(
+      `View Similar Species <i class="fas fa-chevron-down"></i>`
+    );
     $this.removeClass("clicked-once");
   } else {
     getSimilarSpecies();
     $("#hidden_similar").show();
+    $("#similar").html(
+      `View Similar Species <i class="fas fa-chevron-up"></i>`
+    );
     $this.addClass("clicked-once");
   }
 });
@@ -36,7 +42,7 @@ function showSimilar(result) {
 <div class="card" style="width: 14rem;">
     <img class="card-img-top" src="${photo}" style="width: 14rem;">
     <div class="card-body">
-        <h6 class="card-text">${
+        <h6 class="card-text text-center">${
           result.taxon.preferred_common_name
             ? result.taxon.preferred_common_name
             : result.taxon.name
@@ -62,7 +68,6 @@ async function getClassifications() {
     $("#classifications").append(classification);
     $(".loading").hide();
   }
-  // $("#similar").off("click");
 }
 $("#classifybutton").on("click", async function (e) {
   e.preventDefault();
@@ -70,9 +75,15 @@ $("#classifybutton").on("click", async function (e) {
   const $this = $(this);
   if ($this.hasClass("clicked-once")) {
     $("#classifications").hide();
+    $("#classifybutton").html(
+      `View Classfications <i class="fas fa-chevron-down"></i>`
+    );
     $this.removeClass("clicked-once");
   } else {
     $("#classifications").show();
+    $("#classifybutton").html(
+      `View Classfications <i class="fas fa-chevron-up"></i>`
+    );
     getClassifications();
     $this.addClass("clicked-once");
   }
@@ -84,7 +95,7 @@ function showClassifications(result) {
   <div class="card">
     <img class="card-img-top" src="${result[0].default_photo.medium_url}">
     <div class="card-body">
-        <h6 class="card-text">${
+        <h6 class="card-text text-center">${
           result[0].preferred_common_name
             ? result[0].preferred_common_name
             : result[0].name

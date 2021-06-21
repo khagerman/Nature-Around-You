@@ -11,14 +11,14 @@
         </div>
         <select name="filterresults" class="custom-select" id="filter" onchange="this.form.submit();">
             <option value="">Filter</option>
-            <option value="animals">Animals</option>
-            <option value="plants">Plants</option>
-            <option value="insects">Insects</option>
+            <option value="animals">Animals <i class="fas fa-hippo"></i></option>
+            <option value="plants">Plants <i class="fas fa-seedling"></i></option>
+            <option value="insects">Insects <i class="fas fa-bug"></i></option>
             <option value="reptiles">Reptiles</option>
-            <option value="amphibians">Amphibians</option>
-            <option value="birds">Birds</option>
-            <option value="fish">Fish</option>
-            <option value="mammals">Mammals</option>
+            <option value="amphibians">Amphibians <i class="fas fa-frog"></i></option>
+            <option value="birds">Birds <i class="fas fa-kiwi-bird"></i></option>
+            <option value="fish">Fish <i class="fas fa-fish"></i></option>
+            <option value="mammals">Mammals <i class="fas fa-otter"></i></option>
         </select>
         <!-- <button type="submit" class="btn btn-primary my-1">filter</button> -->
     </div>
@@ -54,7 +54,7 @@
                     {%elif item['taxon']['preferred_common_name']%}
                     <p class="card-title text-center text-dark">{{item['taxon']['preferred_common_name']|title}}</p>
                     {%else%}
-                    <p class="card-bio">No common or scientific name listed</p>
+                    <p class="card-bio text-center">No common or scientific name listed</p>
                     {%endif%}
                 </div>
             </div>

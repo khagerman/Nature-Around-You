@@ -63,15 +63,6 @@ def get_info(coords):
     return get_results(res)
 
 
-# # def get_next_page(coords):
-# #     """Get next page of api data"""
-# #     res = requests.get(
-# #         f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=200&page=2"
-# #     )
-
-#     return get_results(res)
-
-
 def get_animal_details(id):
     """Get specific information on a animal or plant"""
     res = requests.get(f"{NATURE_API_BASE_URL}/taxa/{id}")
@@ -97,15 +88,6 @@ def handle_search():
     return render_template("results.html", results=results)
 
 
-# @app.route("/results/2", methods=["GET", "POST"])
-# def more_results():
-#     """get second page of api data"""
-#     results = get_next_page(session["coords"])
-#     searchresults["results"].append(results)
-
-#     return render_template("results.html", results=results)
-
-
 @app.route("/details/<int:id>", methods=["GET", "POST"])
 def view_animal(id):
     """view detail page on clicked on animal or plant"""
@@ -120,8 +102,6 @@ def view_animal(id):
         "details.html",
         results=results,
         id=id,
-        # classifications=classifications,
-        # classify_info=classify_info,
     )
 
 
@@ -215,17 +195,6 @@ def in_database(living_thing_entered):
         )
         db.session.add(new_living_thing)
         db.session.commit()
-
-
-# def show_saved_animals(id):
-#     """show users saved plants/animals"""
-
-#     if "user_id" not in session:
-#         flash(f"You do not have permisson to view this page!", "danger")
-#         return redirect("/login")
-
-#     user = User.query.filter_by(id=id).first()
-#     return render_template("naturejournal.html", user=user)
 
 
 @app.route("/<int:user_id>/save/<int:nature_id>", methods=["GET", "POST"])
