@@ -26,9 +26,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = False
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL", "postgres:///nature"
+    "DATABASE_URL", "postgresql:///nature"
 )
-
+uri = uri.replace("postgres://", "postgresql://", 1)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", secret)
 
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
