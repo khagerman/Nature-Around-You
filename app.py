@@ -33,6 +33,7 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL", "postgresql:///nature"
 )
+SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace("://", "ql://", 1)
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "superSecret123")
 app.config["API_KEY"] = os.environ.get("API_KEY", API_KEY)
