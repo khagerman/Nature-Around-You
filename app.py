@@ -30,7 +30,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
 )
 uri = os.getenv("DATABASE_URL")
 uri = uri.replace("postgres://", "postgresql://", 1)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", secret)
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "superSecret123")
 
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 toolbar = DebugToolbarExtension(app)
