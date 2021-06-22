@@ -13,7 +13,7 @@ import os
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 
-# from secret import SECRET_KEY, secret
+
 from models import db, connect_db, User, LivingThing, UserLivingThing
 from sqlalchemy.exc import IntegrityError
 from forms import UserForm, LoginForm
@@ -31,11 +31,12 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = False
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL", "postgres:///nature"
+    "DATABASE_URL", "postgresql:///nature"
 )
-SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace("://", "ql://", 1)
+uri = os.getenv("DATABASE_URL")
 
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "superSecret123")
+
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", secret)
 app.config["API_KEY"] = os.environ.get("API_KEY", API_KEY)
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 toolbar = DebugToolbarExtension(app)
