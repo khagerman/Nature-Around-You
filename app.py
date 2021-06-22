@@ -12,10 +12,15 @@ from flask import (
 import os
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
-from secret import SECRET_KEY, secret
+
+# from secret import SECRET_KEY, secret
 from models import db, connect_db, User, LivingThing, UserLivingThing
 from sqlalchemy.exc import IntegrityError
 from forms import UserForm, LoginForm
+from decouple import config
+
+secret = config("secret")
+API_KEY = config("API_KEY")
 
 MAP_API_BASE_URL = "http://www.mapquestapi.com/geocoding/v1"
 NATURE_API_BASE_URL = "https://api.inaturalist.org/v1"
@@ -28,10 +33,9 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL", "postgresql:///nature"
 )
-uri = os.getenv("DATABASE_URL")
-uri = uri.replace("postgres://", "postgresql://", 1)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "superSecret123")
 
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "superSecret123")
+app.config["API_KEY"] = os.environ.get("API_KEY", API_KEY)
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 toolbar = DebugToolbarExtension(app)
 
@@ -42,7 +46,7 @@ db.create_all()
 def get_coords(location):
     """Turn given location into coordinates"""
     res = requests.get(
-        f"{MAP_API_BASE_URL}/address", params={"key": SECRET_KEY, "location": location}
+        f"{MAP_API_BASE_URL}/address", params={"key": API_KEY, "location": location}
     )
     data = res.json()
     lat = data["results"][0]["locations"][0]["latLng"]["lat"]

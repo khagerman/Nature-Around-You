@@ -4,7 +4,12 @@
   object-fit: cover;
   background-color: black;
 }
-@media (min-width: 40rem) {
+@media (min-width: 576px) {
+  .card-columns {
+    column-count: 1;
+  }
+}
+@media (min-width: 769px) {
   .card-columns {
     column-count: 2;
   }
@@ -22,19 +27,16 @@
   text-shadow: 0px 0px 6px rgba(15, 15, 15, 0.7);
   text-decoration: bold;
 }
+/* }
 @media (max-width: 600px) {
   h1 {
     font-size: 1rem;
   }
-}
+} */
 .hidden {
   display: none;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-.card-bio {
-  font-size: 1.5rem;
 }

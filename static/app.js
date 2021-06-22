@@ -1,6 +1,7 @@
 BASE_URL = "https://api.inaturalist.org/v1";
 
 async function getSimilarSpecies() {
+  $(".loading-sim").show();
   const id = await axios.get("/similarspecies");
   natureId = id.data.nature_id;
   const res = await axios.get(
@@ -11,7 +12,7 @@ async function getSimilarSpecies() {
     let newLivingThing = showSimilar(result);
     $("#hidden_similar").append(newLivingThing);
   }
-  // $("#similar").off("click");
+  $(".loading-sim").hide();
 }
 
 $("#similar").on("click", async function (e) {
@@ -61,14 +62,14 @@ function showSimilar(result) {
 // get classifications on click
 
 async function getClassifications() {
+  $(".loading-class").show();
   const res = await axios.get("/classifications");
-  $(".loading").show();
+
   for (result of res.data.results) {
-    // console.log(result[0].default_photo.medium_url);
     let classification = showClassifications(result);
     $("#classifications").append(classification);
-    $(".loading").hide();
   }
+  $(".loading-class").hide();
 }
 $("#classifybutton").on("click", async function (e) {
   e.preventDefault();
@@ -111,15 +112,6 @@ function showClassifications(result) {
 
 `;
 }
-
-// $(body).on({
-//   ajaxStart: function () {
-//     $(".loading").show();
-//   },
-//   ajaxStop: function () {
-//     $(".loading").hide();
-//   },
-// });
 
 // bootstrap carosel and collapse code
 $(".carousel").carousel();

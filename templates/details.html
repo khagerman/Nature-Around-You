@@ -2,12 +2,20 @@
 
 {% block content %}
 {%if not(results[0]['preferred_common_name'])%}
-<h1><i>{{results[0]['name']}}</i></h1>
+<h1><span><i>{{results[0]['name']}}</i>
+    </span></h1>
 {%else%}
-<h1>{{results[0]['preferred_common_name']|title}}</h1><i>{{results[0]['name']}}</i>
+<h1>{{results[0]['preferred_common_name']|title}}
+
+</h1><span><i>{{results[0]['name']}}</i></span>
+
+
+<br>
 {%endif%}
 {% if session['user_id'] %}
 {%if results[0]['rank']== "species"%}
+
+
 <form method="POST">
     <a href="/{{session['user_id']}}/save/{{results[0]['id']}}" type="button" class="btn btn-info">Save
         to Nature Journal</a>
@@ -64,8 +72,13 @@
         View Similar Species <i class="fas fa-chevron-down"></i></h3>
 
 </button>
+<div class="loading-sim text-center  hidden">
+    <div class="spinner-border text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 
-<div id="hidden_similar" class="row d-flex justify-content-evenly">
+<div id="hidden_similar" class="row justify-content-center d-flex justify-content-evenly">
 
 </div>
 {%endif%}
@@ -75,12 +88,12 @@
         View Classfications <i class="fas fa-chevron-down"></i></h3>
 
 </button>
-<div class="loading text-center  hidden">
-    <div class="spinner-border" role="status">
+<div class="loading-class text-center  hidden">
+    <div class="spinner-border text-danger" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div class="row" id="classifications">
+<div class="row justify-content-center" id="classifications">
 
 </div>
 
