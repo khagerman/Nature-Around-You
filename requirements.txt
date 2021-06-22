@@ -35,6 +35,8 @@ psycopg2-binary==2.8.6
 ptyprocess==0.7.0
 pycparser==2.20
 Pygments==2.9.0
+python-decouple==3.4
+python-dotenv==0.18.0
 regex==2021.4.4
 requests==2.25.1
 six==1.16.0
