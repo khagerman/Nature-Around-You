@@ -68,7 +68,7 @@ def get_results(data):
 def get_info(coords):
     """Get species based on location"""
     res = requests.get(
-        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=created_at&quality_grade=research&per_page=450"
+        f"{NATURE_API_BASE_URL}/observations/species_counts?geo=true&photos=true&popular=true&verifiable=true&lat={coords['lat']}&lng={coords['lng']}&radius=32&order=desc&order_by=votes&quality_grade=research&per_page=450"
     )
 
     return get_results(res)
@@ -92,8 +92,10 @@ def handle_search():
     location = request.args["location"]
     session["location"] = location
     coords = get_coords(location)
+    print(coords)
     session["coords"] = coords
     results = get_info(coords)
+
     searchresults["results"] = results
 
     return render_template("results.html", results=results)

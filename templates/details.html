@@ -5,12 +5,14 @@
 <h1><span><i>{{results[0]['name']}}</i>
     </span></h1>
 {%else%}
+
 <h1>{{results[0]['preferred_common_name']|title}}
 
-</h1><span><i>{{results[0]['name']}}</i></span>
+</h1><span class="Lead">
+
+    <i>&nbsp{{results[0]['name']}}</i></span>
 
 
-<br>
 {%endif%}
 {% if session['user_id'] %}
 {%if results[0]['rank']== "species"%}
@@ -22,7 +24,7 @@
 </form>
 {%endif%}
 {% else %}
-<a href="/login" type="button" class="btn btn-info"> Login to Save
+<a href="/login" class="btn btn-info"> Login to Save
 </a>
 {%endif%}
 
@@ -30,8 +32,16 @@
 
 
 <h3>Description</h3>
-<p>{{results[0]['wikipedia_summary']|safe}}</p>
+{%if results[0]['wikipedia_summary']%}
+{%if (results[0]['wikipedia_summary']).endswith('...')%}
+<p>{{results[0]['wikipedia_summary']|safe}} <a class="text-sm" href="{{results[0]['wikipedia_url']}}">Read more</a></p>
 
+{% else %}
+<p>{{results[0]['wikipedia_summary']|safe}}</p>
+{%endif%}
+{%else%}
+<p>Sorry, no discription available!</p>
+{%endif%}
 
 <div class="row m-3 d-flex justify-content-evenly">
 
@@ -52,20 +62,20 @@
 {%if results[0]['rank']== "species"%}
 
 <h3>Conservation Status:</h3>
-{%if not(results[0]['conservation_status'])%}
-
+{%if not(results[0]['conservation_statuses']) %}
 <p>No conservation status available</p>
-
-{%elif results[0]['conservation_status']['status'] == 'VU' %}
-<p class="text-warning">Vulnerable</p>
-{%elif results[0]['conservation_status']['status'] == 'LC'%}
-<p class="text-success">Least Concern</p>
-{%elif results[0]['conservation_status']['status'] == 'NT' %}
-<p class="text-warning">Near Threatened</p>
-{%elif results[0]['conservation_status']['status'] == 'EN'%}
-<p class="text-danger">Endangered</p>
-{%elif results[0]['conservation_status']['status'] == 'CR' %}
-<p class="text-danger">Critically Endanged</p>
+{%elif results[0]['conservation_statuses'][0]['status'] == 'VU' %}
+<p class="lead text-warning">Vulnerable</p>
+{%elif results[0]['conservation_statuses'][0]['status'] == 'LC'%}
+<p class="lead text-success">Least Concern</p>
+{%elif results[0]['conservation_statuses'][0]['status'] == 'NT' %}
+<p class="lead text-warning">Near Threatened</p>
+{%elif results[0]['conservation_statuses'][0]['status'] == 'EN'%}
+<p class="lead text-danger">Endangered</p>
+{%elif results[0]['conservation_statuses'][0]['status'] == 'CR' %}
+<p class="lead text-danger">Critically Endanged</p>
+{%else%}
+<p>No conservation status available</p>
 {%endif%}
 
 <h3>Similar Species <button data-toggle="collapse" class="btn btn-info" id="similar">

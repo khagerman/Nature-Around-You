@@ -15,6 +15,12 @@ async function getSimilarSpecies() {
   $(".loading-sim").hide();
 }
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
 $("#similar").on("click", async function (e) {
   e.preventDefault();
 
@@ -100,7 +106,7 @@ function showClassifications(result) {
     <div class="card-body">
         <h6 class="card-text text-center">${
           result[0].preferred_common_name
-            ? result[0].preferred_common_name
+            ? toTitleCase(result[0].preferred_common_name)
             : result[0].name
         }</h6>
       
