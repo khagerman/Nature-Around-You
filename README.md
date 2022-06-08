@@ -12,7 +12,7 @@ To start, users enter their location (or any location). Users will then see plan
 
 ## Filter results
 
-Users can filter results by the folloing categories:
+Users can filter results by the following categories:
 
 - Animals
 - Plants
